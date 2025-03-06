@@ -25,13 +25,26 @@ const authenticator = async () => {
   throw new Error("Image Upload Error. Failed to authenticate");
 };
 
-const ImageUpload = ({
-  onFileChange,
-}: {
+interface Props {
+  type: "image" | "video";
+  accept: string;
+  placeholder: string;
+  folder: string;
+  variant: "dark" | "light";
   onFileChange: (filePath: string) => void;
-}) => {
+}
+
+const FileUpload = ({
+  type,
+  accept,
+  placeholder,
+  folder,
+  variant,
+  onFileChange,
+}: Props) => {
   const [file, setFile] = useState<{ filePath: string } | null>(null);
   const ikUploadRef = useRef(null);
+  const [progress, setProgress] = useState(0);
   const onError = (error: any) => {
     console.error(error);
     toast.error("Failed to upload file");
@@ -91,4 +104,4 @@ const ImageUpload = ({
   );
 };
 
-export default ImageUpload;
+export default FileUpload;
