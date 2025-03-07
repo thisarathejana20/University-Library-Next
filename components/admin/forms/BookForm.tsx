@@ -19,6 +19,7 @@ import { BookSchema } from "@/lib/validations";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import FileUpload from "@/components/FileUpload";
+import ColorPicker from "./ColorPicker";
 
 interface Props extends Partial<Book> {
   type?: "create" | "update";
@@ -45,7 +46,9 @@ const BookForm = ({ type, ...book }: Props) => {
   });
 
   // 2. Define a submit handler.
-  const onSubmit = async (values: z.infer<typeof BookSchema>) => {};
+  const onSubmit = async (values: z.infer<typeof BookSchema>) => {
+    console.log(values);
+  };
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 w-full">
@@ -184,11 +187,9 @@ const BookForm = ({ type, ...book }: Props) => {
                 Primary Color
               </FormLabel>
               <FormControl>
-                <Input
-                  required
-                  placeholder="Book title"
-                  {...field}
-                  className="book-form-input"
+                <ColorPicker
+                  onPickerChange={field.onChange}
+                  value={field.value}
                 />
               </FormControl>
               <FormMessage />
